@@ -5,9 +5,8 @@ tags:
   - mysql
   - redis
   - golang
+summary: This is the summary of a sample project
 ---
-
-# Markdown Front Matter
 
 I had no knowledge of frontmatter until I started learning Astro. Here are some notes on what it is, some syntax tips, and notes on YAML in general.
 

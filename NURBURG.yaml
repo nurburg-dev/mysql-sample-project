@@ -1,71 +1,22 @@
 mysql:
-- name: test-mysql
+- name: testmysql
   cpuCores: 1
   memoryGB: 1
   dbName: test
   user: testuser
   password: password
-postgres:
-- name: test-postgres
-  cpuCores: 1
-  memoryGB: 1
-  dbName: test
-  user: testuser
-  password: password
-redis:
-- name: test-redis
-  cpuCores: 1
-  memoryGB: 1
-  followers: 2
-  password: password
-services:
-- name: test-svc
-  directory: "."
-  cpuCores: 1
-  memoryGB: 1
-  instances: 1
-  runtime: "nodejs"
+traffic:
   env:
-    ANY_ENV: any-value
-k6Traffic:
-  file: ./test.js
-  timeMinutes: 5
-  cpuCores: 1
-  memoryGB: 1
-
----
-
-mysql:
-- name: test-mysql
-  cpuCores: 1
-  memoryGB: 1
-  dbName: test
-  user: testuser
-  password: password
-postgres:
-- name: test-postgres
-  cpuCores: 1
-  memoryGB: 1
-  dbName: test
-  user: testuser
-  password: password
-redis:
-- name: test-redis
-  cpuCores: 1
-  memoryGB: 1
-  followers: 2
-  password: password
+    API_HOST: http://testservice:3000
 services:
-- name: test-svc
-  directory: "."
-  cpuCores: 1
-  memoryGB: 1
+- name: testservice
+  port: 3000
+  runtime: nodejs
   instances: 1
-  runtime: "nodejs"
   env:
-    ANY_ENV: any-value
-k6Traffic:
-  file: ./test_2.js
-  timeMinutes: 5
-  cpuCores: 1
-  memoryGB: 1 
+    DB_HOST: testmysql
+    DB_NAME: test
+    DB_USER: testuser
+    DB_PASSWORD: password
+    PORT: 3000
+  
