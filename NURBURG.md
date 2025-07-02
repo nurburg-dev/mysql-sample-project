@@ -7,8 +7,6 @@ tags:
   - golang
 ---
 
-# Markdown Front Matter
-
 I had no knowledge of frontmatter until I started learning Astro. Here are some notes on what it is, some syntax tips, and notes on YAML in general.
 
 > I can't find why you would use them in Markdown files, except for blog posts in Astro. Would a keyword-rich `description` enable your repo to be found more often on searches?
