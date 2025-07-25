@@ -1,6 +1,6 @@
 ---
 title: This is a sample project
-video: https://www.youtube.com/watch?v=UUaAQJ0DBPQ
+video: https://www.youtube.com/watch?v=7ySVWcFHz98
 tags:
   - mysql
   - redis
