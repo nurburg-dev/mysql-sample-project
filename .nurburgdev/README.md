@@ -6,6 +6,10 @@ tags:
   - redis
   - golang
 summary: This is the summary of a sample project
+author: Anunay Biswas
+authorTitle: founder, nurburg.dev
+authorLink: https://www.linkedin.com/in/anunay-biswas-26206539/
+publishedOn: 2025-09-04
 ---
 
 I had no knowledge of frontmatter until I started learning Astro. Here are some notes on what it is, some syntax tips, and notes on YAML in general.
