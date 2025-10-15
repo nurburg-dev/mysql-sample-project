@@ -1,0 +1,103 @@
+---
+test_name: Test API Health Check
+
+stages:
+  - name: Get health status
+    request:
+      url: "{tavern.env_vars.HOST}/api/health"
+      method: GET
+    response:
+      status_code: 200
+      json:
+        status: "OK"
+      headers:
+        content-type: application/json; charset=utf-8
+
+---
+test_name: Test Create New User
+
+stages:
+  - name: Create a new user
+    request:
+      url: "{tavern.env_vars.HOST}/api/users"
+      method: POST
+      json:
+        name: "John Doe"
+        email: "john.doe@example.com"
+    response:
+      status_code: 201
+      json:
+        name: "John Doe"
+        email: "john.doe@example.com"
+        id: !anyint
+      save:
+        json:
+          user_id: id
+
+---
+test_name: Test Get All Users
+
+stages:
+  - name: Fetch all users
+    request:
+      url: "{tavern.env_vars.HOST}/api/users"
+      method: GET
+    response:
+      status_code: 200
+      json:
+        users: !anylist
+        count: !anyint
+
+---
+test_name: Test Get User By ID
+
+stages:
+  - name: Create a user first
+    request:
+      url: "{tavern.env_vars.HOST}/api/users"
+      method: POST
+      json:
+        name: "Jane Smith"
+        email: "jane.smith@example.com"
+    response:
+      status_code: 201
+      save:
+        json:
+          created_user_id: id
+
+  - name: Fetch user by ID
+    request:
+      url: "{tavern.env_vars.HOST}/api/users/{created_user_id}"
+      method: GET
+    response:
+      status_code: 200
+      json:
+        id: !anyint
+        name: "Jane Smith"
+        email: "jane.smith@example.com"
+
+---
+test_name: Test Create User With Duplicate Email
+
+stages:
+  - name: Create first user
+    request:
+      url: "{tavern.env_vars.HOST}/api/users"
+      method: POST
+      json:
+        name: "Test User"
+        email: "duplicate@example.com"
+    response:
+      status_code: 201
+
+  - name: Try to create user with same email
+    request:
+      url: "{tavern.env_vars.HOST}/api/users"
+      method: POST
+      json:
+        name: "Another User"
+        email: "duplicate@example.com"
+    response:
+      status_code: 409
+      json:
+        error: "Email already exists"
