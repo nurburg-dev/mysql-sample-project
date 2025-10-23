@@ -1,120 +1,75 @@
 ---
-title: This is a sample project
-video: https://www.youtube.com/watch?v=7ySVWcFHz98
+title: "Implement an API ratelimiter in Nodejs"
 tags:
-  - mysql
   - redis
-  - golang
-summary: This is the summary of a sample project
+  - nodejs
+  - expressjs
+  - typescript
+summary: "Ratelimitter are middlewares which disallow api access to an enpoint if the number of API requests cross a certain number per minute. In this assignment you will be implementing an API ratelimiter in nodejs."
 author: Anunay Biswas
 authorTitle: founder, nurburg.dev
 authorLink: https://www.linkedin.com/in/anunay-biswas-26206539/
 publishedOn: 2025-09-04
+published: false
 ---
 
-I had no knowledge of frontmatter until I started learning Astro. Here are some notes on what it is, some syntax tips, and notes on YAML in general.
+## Problem Statement
 
-> I can't find why you would use them in Markdown files, except for blog posts in Astro. Would a keyword-rich `description` enable your repo to be found more often on searches?
+You need to implement an API rate limiter in Node.js that can limit the number of request to backend services `service-a` and `service-b`.
 
-## What exactly is Frontmatter
+The application consists of:
 
-[What exactly is Frontmatter](https://daily-dev-tips.com/posts/what-exactly-is-frontmatter/)
+- **Main API Server**: Express.js application with rate limiting middleware
+- **Service A**: Backend service running in devcontainer
+- **Service B**: Backend service running in devcontainer
+- **Redis**: Optional Redis setup provided. Could be used in your architecture if you like.
 
-Frontmatter is a way to identify metadata in Markdown files. Metadata can literally be anything you want it to be, but often it's used for data elements your page needs and you don't want to show directly.
+Following functionality should be ensured.
 
-Some examples of common metadata are (the table above the H1 at the top of this file is the frontmatter for the page):
+1. `POST /api/a/*` - Routes to Service A with rate limiting
+2. `POST /api/b/*` - Routes to Service B with rate limiting
+3. Each backend service has independent rate limiting.
 
-- Title of the post
-- Description for SEO purposes
-- Tags that belong to a document
-- The date it was written
-- The author(s)
+## Development Setup
 
-To add Frontmatter to a Markdown document, you have to start by writing a three-dotted block at the top of your file:
+### Express.js Development
 
-```markdown
----
-title: Frontmatter section
----
-```
+1. **Install Dependencies**
 
-Everything in there will be seen as metadata, and that block **_MUST_** be the first thing in your file!
+   ```bash
+   npm install
+   ```
 
-## Basic Frontmatter options
+2. **Environment Setup**
 
-It's important to note that **Frontmatter is parsed as `YAML` blocks**, so the indentation is important
+   ```bash
+   cp .env.dev .env
+   ```
 
-- Set regular variables with a colon setup
-- Or convert them into an array of objects
-- You can even use the bracket way of defining arrays
-- You can have multidimensional object arrays
-- You can use multi-line text blocks using the pipe method
+3. **Run Development Server**
 
-> NOTE: the indentation displayed in the code block below is "off". See the source code for the actual indentation used.
+   ```bash
+   npm run dev
+   ```
 
-## Bridgetown Front Matter
+4. **Application URL**
+   - Local server: http://localhost:3000
 
-[Front Matter](https://www.bridgetownrb.com/docs/front-matter)
+## Database Services
 
-Front matter is a snippet of YAML or Ruby data which sits at the top of a file between special line delimiters. You can think of front matter as a datastore consisting of one or more key-value pairs.
+### Redis
 
-Any file that contains a front matter block will be specially processed by Bridgetown.
+- **Host**: ts-rate-limiterredis
+- **Port**: 6379
+- **Database**: 0
 
-> What or who is _Bridgetown_?
+## Development Workflow
 
-The front matter must be the first thing in the file and must either take the form of valid YAML set between triple-dashed lines, or one of several Ruby-based formats.
+1. Make your changes to the code
+2. Test locally using the development server
+3. Ensure all tests pass
+4. Deploy using the production configuration
 
-Between these triple-dashed lines, you can set predefined variables or add custom variables of your own.
+## Production Deployment
 
-## what-is-frontmatter.md
-
-[what-is-frontmatter.md](https://github.com/cuttlebelle/website/blob/master/content/documentation/what-is-frontmatter.md)
-
-With front-matter we can add more complex data to our content than just blobs of text. Front-matter has to be on the top of the file and begins and ends with three dashes `---`.
-
-## Dendron: Frontmatter
-
-Frontmatter is a collection of custom attributes at the top of each Markdown file. The beginning and end of this is indicated by `---`.
-
-Frontmatter is YAML that you can add to the front of your Markdown file. It was first introduced by Jekyll and is a convenient way of adding metadata to your plaintext documents.
-
-## YAML Tutorial
-
-[YAML Tutorial : A Complete Language Guide with Examples](https://spacelift.io/blog/yaml)
-
-A YAML format primarily uses 3 node types:
-
-1. Maps/Dictionaries (YAML calls it mapping):
-   The content of a mapping node is an unordered set of key/value node pairs, with the restriction that each of the keys is unique. YAML places no further restrictions on the nodes.
-1. Arrays/Lists (YAML calls them sequences):
-   The content of a sequence node is an ordered series of zero or more nodes. In particular, a sequence may contain the same node more than once. It could even contain itself.
-1. Literals (Strings, numbers, boolean, etc.):
-   The content of a scalar node is an opaque datum that can be presented as a series of zero or more Unicode characters.
-
-### Indentation
-
-A YAML file relies on whitespace and indentation to indicate nesting.
-
-It is critical to note that tab characters cannot be used for indentation in YAML files; only spaces can be used. The number of spaces used for indentation doesn’t matter as long as they are consistent.
-
-### Mapping
-
-Mappings are used to associate key/value pairs that are unordered. Maps can be nested by increasing the indentation, or new maps can be created at the same level by resolving the previous one.
-
-### Sequences
-
-Sequences in YAML are represented by using the hyphen (`-`) and space. They are ordered and can be embedded inside a map using indentation.
-
-Tip: Remember that the order matters with sequences but not with mappings.
-
-### Literals — Strings
-
-The string literals do not require to be quoted. It is only important to quote them when they contain a value that can be mistaken as a special character
-
-1. Folding Strings: Strings can also be written in blocks and be interpreted without the new line characters using the fold operator (greater than `>`).
-1. Block strings: Strings can be interpreted as blocks using the block (pipe `|`) character. This is interpreted with the new lines (`\n`)
-1. Chomp characters: Multiline strings may end with whitespaces. Preserve chomp(`+`) and strip chomp operators can be used either to preserve or strip the whitespaces. They can be used with block and pipe characters. tripping new line character (`-`)
-
-## Comments
-
-YAML file also supports comments, unlike JSON. A comment starts with `#`.
+The application uses `.env.prod` for production environment variables with Kubernetes service names for database connections.
