@@ -434,3 +434,5 @@ kubectl rollout status deployment/nurburg-platform
 
 echo "✅ Deployment completed successfully!"
 ```
+
+  [![🚀 Fork Email Server](https://img.shields.io/badge/🚀_Fork-Email_Server-0070f3?style=for-the-badge)](https://nurburg.dev/nurburg-dev/projects:0001-email-rate-limiter)
