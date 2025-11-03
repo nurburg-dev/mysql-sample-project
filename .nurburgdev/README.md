@@ -1,10 +1,7 @@
 ---
 title: "Implement an API ratelimiter in Nodejs"
 tags:
-  - redis
-  - nodejs
-  - expressjs
-  - typescript
+  - mysql
 summary: "Ratelimitter are middlewares which disallow api access to an enpoint if the number of API requests cross a certain number per minute. In this assignment you will be implementing an API ratelimiter in nodejs."
 author: Anunay Biswas
 authorTitle: founder, nurburg.dev
